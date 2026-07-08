@@ -117,7 +117,7 @@
     return data.opening[0];
   }
 
-  function updatePreview(short, fullName) {
+  function updatePreview(short, fullName, layer) {
     var opening = getOpeningData(short);
     if (heroPreview.title) heroPreview.title.textContent = fullName || short;
     if (heroPreview.poem) {
@@ -129,8 +129,14 @@
       heroPreview.meta.textContent = PROVINCE_NOTES[short] || "点击进入省份页，继续看地标与诗句如何落在地形之上。";
     }
     if (window.WeatherScene) {
-      var layer = focusLayers[fullName];
-      var adcode = layer && layer.feature && layer.feature.properties ? layer.feature.properties.adcode : "";
+      // 优先用悬停/轮播传入的真实图层取 adcode；兼容初始调用无图层时回退到 focusLayers
+      var adcode = "";
+      if (layer && layer.feature && layer.feature.properties) {
+        adcode = layer.feature.properties.adcode || "";
+      } else {
+        var fl = focusLayers[fullName];
+        adcode = fl && fl.feature && fl.feature.properties ? fl.feature.properties.adcode : "";
+      }
       if (adcode) window.WeatherScene.setByAdcode(adcode, short + " · 今日天气");
     }
   }
@@ -138,7 +144,7 @@
   function activateProvince(name, layer, opts) {
     opts = opts || {};
     var short = shortName(name);
-    updatePreview(short, name);
+    updatePreview(short, name, layer);
     if (!layer) return;
     layer.setStyle(hoverStyle());
     if (layer.getTooltip()) layer.openTooltip();

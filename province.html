@@ -13,33 +13,34 @@
 
   <button class="btn back-btn" onclick="window.location.href='index.html'">← 返回大中国</button>
 
-  <section class="province-hero">
-    <div class="province-hero-kicker">入卷观山河</div>
-    <h1 id="provinceHeroTitle">省份</h1>
-    <p id="provinceHeroLead">从地形、地标与诗句，一层层走近这片土地。</p>
-    <div class="province-hero-meta">
-      <span id="provinceHeroTag">诗卷展开中</span>
-      <span id="provinceHeroCount">0 处地标</span>
+  <aside class="side province-side" id="side" data-panel-title="省份总览">
+    <div class="province-side-hero">
+      <div class="province-hero-kicker">入卷观山河</div>
+      <h1 id="provinceHeroTitle">省份</h1>
+      <p id="provinceHeroLead">从地形、地标与诗句，一层层走近这片土地。</p>
+      <div class="province-hero-meta">
+        <span id="provinceHeroTag">诗卷展开中</span>
+        <span id="provinceHeroCount">0 处地标</span>
+      </div>
     </div>
-  </section>
 
-  <div class="side" id="side">
+    <div class="province-weather-host" id="provinceWeatherHost"></div>
+
+    <div class="province-spotlight" id="landmarkSpotlight">
+      <div class="spotlight-kicker">此刻驻足</div>
+      <div class="spotlight-title" id="spotlightTitle">等待落笔</div>
+      <div class="spotlight-copy" id="spotlightCopy">点击省内地标，展开属于这一处山河的诗句。</div>
+    </div>
+
     <h2 id="sideTitle">省份</h2>
     <div class="prov-intro" id="provIntro">一省一卷，山河待读。</div>
     <div class="prov-poem" id="provPoem">诗词整理中…</div>
     <div class="list-title">山川名胜</div>
     <ul id="landmarkList"></ul>
-  </div>
+  </aside>
 
   <div class="loading" id="loading">山河加载中…</div>
 
-  <div class="landmark-spotlight" id="landmarkSpotlight">
-    <div class="spotlight-kicker">此刻驻足</div>
-    <div class="spotlight-title" id="spotlightTitle">等待落笔</div>
-    <div class="spotlight-copy" id="spotlightCopy">点击省内地标，展开属于这一处山河的诗句。</div>
-  </div>
-
-  <!-- 诗词卡片 -->
   <div class="poem-mask" id="poemMask">
     <div class="poem-card">
       <button class="poem-close" id="poemClose">×</button>
@@ -55,6 +56,7 @@
   <script src="js/config.js"></script>
   <script src="js/weather.js"></script>
   <script src="data/poems.js"></script>
+  <script src="js/landmark-art.js"></script>
   <script src="js/province.js"></script>
   <script src="js/shell.js"></script>
 </body>

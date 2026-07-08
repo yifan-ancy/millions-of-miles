@@ -39,6 +39,7 @@
 
     selectors.forEach(function (selector) {
       Array.prototype.forEach.call(document.querySelectorAll(selector), function (panel, index) {
+        if (panel.dataset.panelSkip === "1") return;
         enhancePanel(panel, selector + "-" + index);
       });
     });

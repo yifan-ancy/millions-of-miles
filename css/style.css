@@ -36,11 +36,16 @@ body {
 .home-entered .focus-rail,
 .home-entered .scene-note,
 .home-entered .tabbar,
-.home-entered .weather-dock,
-.home-entered .weather-fx {
+.home-entered .weather-dock {
   opacity: 1;
   transform: none;
   pointer-events: auto;
+  transition: opacity .7s ease, transform .8s ease;
+}
+.home-entered .weather-fx {
+  opacity: 1;
+  transform: none;
+  pointer-events: none;
   transition: opacity .7s ease, transform .8s ease;
 }
 .home-entered .hero-stage { transition-delay: .18s; }
@@ -188,7 +193,7 @@ body::after {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 6;
+  z-index: 1250;
   overflow: hidden;
 }
 .weather-fx > * { position: absolute; inset: 0; opacity: 0; transition: opacity .5s ease; }
@@ -699,6 +704,93 @@ body.weather-modal-open .weather-dock {
   box-shadow: 0 10px 36px rgba(60,40,10,0.3); max-height: 72vh; overflow-y: auto;
 }
 .side h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: 6px; color: var(--gold-deep); }
+.province-side {
+  width: 360px;
+  max-height: 78vh;
+  background:
+    linear-gradient(180deg, rgba(252,245,225,0.97), rgba(235,216,171,0.96)),
+    radial-gradient(circle at top right, rgba(178,58,46,0.08), transparent 26%);
+  box-shadow: 0 22px 54px rgba(60,40,10,0.3);
+}
+.province-side-hero {
+  position: relative;
+  padding: 10px 12px 14px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.36), rgba(255,244,214,0.18));
+  border: 1px solid rgba(156,107,31,0.22);
+}
+.province-side-hero::after {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(178,58,46,0.18), rgba(178,58,46,0));
+  pointer-events: none;
+}
+.province-side .province-hero-kicker {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--seal);
+}
+.province-side h1 {
+  margin: 8px 0 6px;
+  font-size: 32px;
+  letter-spacing: 5px;
+  color: var(--ink);
+}
+.province-side p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.province-weather-host {
+  margin: 14px 0;
+}
+.weather-dock.weather-inline {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+  z-index: auto;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background:
+    linear-gradient(160deg, rgba(247,236,206,0.96), rgba(234,214,167,0.92)),
+    radial-gradient(circle at top right, rgba(93,147,190,0.16), transparent 36%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 14px 30px rgba(60,40,10,0.12);
+}
+.province-spotlight {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(156,107,31,0.24);
+  background: linear-gradient(160deg, rgba(255,249,234,0.72), rgba(244,228,189,0.56));
+}
+.province-side .prov-intro {
+  background: rgba(255,255,255,0.32);
+}
+.province-side .prov-poem {
+  max-height: 156px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.province-side #landmarkList {
+  display: grid;
+  gap: 8px;
+}
+.province-side #landmarkList li {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(156,107,31,0.18);
+  background: rgba(255,255,255,0.38);
+}
+.province-side #landmarkList li:hover {
+  transform: translateY(-1px);
+}
 .prov-intro {
   margin-bottom: 10px;
   padding: 10px 12px;
@@ -1277,3 +1369,30 @@ body.weather-modal-open .weather-dock {
 /* 页面淡入（app 质感） */
 @keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 body { animation: pageIn .45s ease both; }
+
+/* 省份详情页：地标 Q 版剪影标记（直接绘形状，不进卡片） */
+.lm-svg { display: block; }
+.lm-badge {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(243, 231, 201, 0.92);
+  border: 1px solid rgba(156, 107, 31, 0.5);
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(42, 24, 8, 0.3);
+}
+.lm-badge .lm-svg { width: 22px; height: 22px; }
+.lm-pin {
+  display: flex; flex-direction: column; align-items: center;
+  filter: drop-shadow(0 6px 8px rgba(42, 24, 8, 0.35));
+}
+.lm-pin .lm-svg { width: 60px; height: 60px; }
+.lm-name {
+  margin-top: 2px;
+  font-size: 12px; line-height: 1.2;
+  color: #5b4a36;
+  background: rgba(243, 231, 201, 0.92);
+  border: 1px solid rgba(156, 107, 31, 0.4);
+  border-radius: 8px;
+  padding: 1px 7px;
+  white-space: nowrap;
+}

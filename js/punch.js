@@ -326,7 +326,6 @@
         state.plans[name].reachedAt = state.plans[name].reachedAt ? null : Date.now();
         savePlans();
         renderAll();
-        openEditor(entry);
       };
 
       ul.appendChild(li);

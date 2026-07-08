@@ -72,10 +72,26 @@
     setFx("clear");
   }
 
+  // 取不到真实天气时，按 adcode 稳定地选一种「演示天气」并播放粒子，
+  // 保证离线 / file:// / 网络受限时也能看到动画，而不是一片空白。
+  function mockByAdcode(adcode, title) {
+    var kinds = ["rain", "snow", "cloud", "wind", "sun"];
+    var seed = 0;
+    var s = String(adcode || title || "cn");
+    for (var i = 0; i < s.length; i += 1) seed += s.charCodeAt(i);
+    var kind = kinds[seed % kinds.length];
+    var label = { rain: "雨", snow: "雪", cloud: "多云", wind: "风", sun: "晴" }[kind];
+    document.getElementById("weatherPlace").textContent = title || "中国山河";
+    document.getElementById("weatherText").textContent = "演示·" + label;
+    document.getElementById("weatherTemp").textContent = "--°";
+    document.getElementById("weatherMeta").textContent = "离线演示天气（未连高德实时接口）";
+    setFx(kind);
+  }
+
   function fetchWeather(adcode, title) {
     var key = window.AMAP_KEY;
     if (!key || !adcode) {
-      fallback(title, "未配置高德 Web 服务 Key");
+      mockByAdcode(adcode, title);
       return;
     }
 
@@ -93,11 +109,11 @@
           cache[cacheKey] = data.lives[0];
           if (currentKey === cacheKey) renderRegion(title, data.lives[0]);
         } else {
-          fallback(title, (data && data.info) || "天气查询失败");
+          mockByAdcode(adcode, title);
         }
       })
       .catch(function () {
-        fallback(title, "天气查询失败，请稍后再试");
+        mockByAdcode(adcode, title);
       });
   }
 
