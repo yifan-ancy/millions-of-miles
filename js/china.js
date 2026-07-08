@@ -12,12 +12,6 @@
     return (full || "").replace(/(省|市|自治区|特别行政区)$/g, "");
   }
 
-  var INTRO_DONE_KEY = "millions_of_miles_intro_seen_v1";
-  var skipIntro = false;
-  try {
-    skipIntro = localStorage.getItem(INTRO_DONE_KEY) === "1";
-  } catch (e) {}
-
   var map = L.map("map", {
     center: [35.5, 104],
     zoom: 4,
@@ -32,13 +26,11 @@
     { maxZoom: 12, attribution: "地形 © Esri World Shaded Relief" }
   ).addTo(map);
 
-  if (!skipIntro) {
-    map.dragging.disable();
-    map.scrollWheelZoom.disable();
-    map.doubleClickZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
-  }
+  map.dragging.disable();
+  map.scrollWheelZoom.disable();
+  map.doubleClickZoom.disable();
+  map.boxZoom.disable();
+  map.keyboard.disable();
 
   var FOCUS = ["山西省", "陕西省", "四川省", "湖北省", "湖南省", "江苏省", "浙江省", "江西省", "山东省", "安徽省"];
   var PROVINCE_NOTES = {
@@ -194,10 +186,6 @@
   function enterExperience() {
     if (entered) return;
     entered = true;
-    skipIntro = true;
-    try {
-      localStorage.setItem(INTRO_DONE_KEY, "1");
-    } catch (e) {}
     document.body.classList.add("home-entering");
     if (introOverlay) introOverlay.classList.add("is-leaving");
     setTimeout(function () {
@@ -267,8 +255,6 @@
 
   updatePreview("山西", "山西省");
   runFocusLoop();
-  if (skipIntro) enterWithoutIntro();
-
   var exploreBtn = document.getElementById("heroExploreBtn");
   if (exploreBtn) {
     exploreBtn.onclick = function () {
@@ -289,11 +275,6 @@
   }
 
   window.addEventListener("pageshow", function () {
-    if (localStorage.getItem(INTRO_DONE_KEY) === "1") {
-      skipIntro = true;
-      enterWithoutIntro();
-      return;
-    }
     entered = false;
     document.body.classList.remove("home-entered", "home-exploring", "home-entering");
     document.body.classList.add("home-prelude");

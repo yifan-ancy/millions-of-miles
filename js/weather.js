@@ -34,7 +34,11 @@
     if (!root) return;
     var html = "";
     for (var i = 0; i < count; i += 1) {
-      html += "<span class='" + cls + "' style='left:" + (i * (100 / count)).toFixed(2) + "%;animation-delay:" + (i * 0.12).toFixed(2) + "s'></span>";
+      html += "<span class='" + cls + "' style='left:" +
+        (i * (100 / count)).toFixed(2) +
+        "%;animation-delay:" +
+        (i * 0.12).toFixed(2) +
+        "s'></span>";
     }
     root.innerHTML = html;
   }
@@ -56,35 +60,51 @@
   }
 
   function renderRegion(title, live) {
-    document.getElementById("weatherPlace").textContent = title || live.province || live.city || "中国山河";
-    document.getElementById("weatherText").textContent = live.weather || "天气未知";
-    document.getElementById("weatherTemp").textContent = (live.temperature || "--") + "°";
+    document.getElementById("weatherPlace").textContent =
+      title || live.province || live.city || "中国山河";
+    document.getElementById("weatherText").textContent =
+      live.weather || "天气未知";
+    document.getElementById("weatherTemp").textContent =
+      (live.temperature || "--") + "°";
     document.getElementById("weatherMeta").textContent =
-      "风力 " + (live.windpower || "--") + " 级 · 湿度 " + (live.humidity || "--") + "% · " + (live.reporttime || "刚刚");
+      "风力 " + (live.windpower || "--") +
+      " 级 · 湿度 " + (live.humidity || "--") +
+      "% · " + (live.reporttime || "刚刚");
     setFx(classify(live.weather));
   }
 
   function fallback(title, message) {
-    document.getElementById("weatherPlace").textContent = title || "中国山河";
+    document.getElementById("weatherPlace").textContent =
+      title || "中国山河";
     document.getElementById("weatherText").textContent = "天气未连通";
     document.getElementById("weatherTemp").textContent = "--°";
-    document.getElementById("weatherMeta").textContent = message || "请检查高德 Web 服务 Key 或网络状态";
+    document.getElementById("weatherMeta").textContent =
+      message || "请检查高德 Web 服务 Key 或网络状态";
     setFx("clear");
   }
 
-  // 取不到真实天气时，按 adcode 稳定地选一种「演示天气」并播放粒子，
-  // 保证离线 / file:// / 网络受限时也能看到动画，而不是一片空白。
   function mockByAdcode(adcode, title) {
     var kinds = ["rain", "snow", "cloud", "wind", "sun"];
     var seed = 0;
-    var s = String(adcode || title || "cn");
-    for (var i = 0; i < s.length; i += 1) seed += s.charCodeAt(i);
+    var source = String(adcode || title || "cn");
+    for (var i = 0; i < source.length; i += 1) {
+      seed += source.charCodeAt(i);
+    }
     var kind = kinds[seed % kinds.length];
-    var label = { rain: "雨", snow: "雪", cloud: "多云", wind: "风", sun: "晴" }[kind];
-    document.getElementById("weatherPlace").textContent = title || "中国山河";
-    document.getElementById("weatherText").textContent = "演示·" + label;
+    var labelMap = {
+      rain: "小雨",
+      snow: "小雪",
+      cloud: "多云",
+      wind: "有风",
+      sun: "晴朗"
+    };
+    document.getElementById("weatherPlace").textContent =
+      title || "中国山河";
+    document.getElementById("weatherText").textContent =
+      "演示 · " + labelMap[kind];
     document.getElementById("weatherTemp").textContent = "--°";
-    document.getElementById("weatherMeta").textContent = "离线演示天气（未连高德实时接口）";
+    document.getElementById("weatherMeta").textContent =
+      "离线演示天气（未连高德实时接口）";
     setFx(kind);
   }
 
@@ -102,8 +122,16 @@
       return;
     }
 
-    fetch("https://restapi.amap.com/v3/weather/weatherInfo?city=" + encodeURIComponent(adcode) + "&key=" + encodeURIComponent(key) + "&extensions=base&output=JSON")
-      .then(function (response) { return response.json(); })
+    fetch(
+      "https://restapi.amap.com/v3/weather/weatherInfo?city=" +
+      encodeURIComponent(adcode) +
+      "&key=" +
+      encodeURIComponent(key) +
+      "&extensions=base&output=JSON"
+    )
+      .then(function (response) {
+        return response.json();
+      })
       .then(function (data) {
         if (data && data.status === "1" && data.lives && data.lives[0]) {
           cache[cacheKey] = data.lives[0];

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>山河账号 · 登录</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="auth-shell">
+    <div class="auth-card">
+      <div class="auth-kicker">山河账号</div>
+      <h1>登录或创建你的山河足迹</h1>
+      <p>登录后，你的计划、备注与已抵达状态会按用户独立保存到 Node.js 后端。</p>
+
+      <div class="auth-tabs">
+        <button class="btn primary" id="loginTab">登录</button>
+        <button class="btn" id="registerTab">注册</button>
+      </div>
+
+      <form id="authForm" class="auth-form">
+        <label class="auth-field" id="displayNameField" style="display:none">
+          <span>昵称</span>
+          <input id="displayNameInput" type="text" placeholder="例如：阿青" />
+        </label>
+        <label class="auth-field">
+          <span>用户名</span>
+          <input id="usernameInput" type="text" placeholder="例如：aqing" />
+        </label>
+        <label class="auth-field">
+          <span>密码</span>
+          <input id="passwordInput" type="password" placeholder="至少 6 位" />
+        </label>
+        <button class="btn primary auth-submit" type="submit" id="authSubmit">登录</button>
+      </form>
+
+      <div class="auth-hint" id="authHint">默认连接 `http://localhost:8787`。</div>
+      <a class="auth-back" href="index.html">先看看山河</a>
+    </div>
+  </div>
+
+  <script src="js/session.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

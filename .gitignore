@@ -1,6 +1,13 @@
 # 含密钥的本地配置，勿提交
 js/config.js
 
+# 后端：环境变量与本地数据库（含用户密码哈希），勿提交
+server/.env
+server/data/
+
+# 依赖
+node_modules/
+
 # 系统垃圾
 .DS_Store
 Thumbs.db
