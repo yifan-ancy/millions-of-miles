@@ -16,33 +16,50 @@
     <div class="sub">踏 遍 千 山 · 留 印 诗 行</div>
   </div>
 
-  <div class="side" id="side" style="right:40px;top:120px;width:280px">
-    <h2>我的足迹</h2>
+  <div class="side" id="side" style="right:40px;top:120px;width:320px">
+    <h2>山河计划</h2>
+    <div class="prov-intro">搜索地标、从推荐里加入，逐步把想去的地方排成你的中国行程。</div>
+    <div class="planner-search">
+      <input id="planSearchInput" type="text" placeholder="搜索地点、诗词地标、省份" />
+      <button class="btn primary" id="planSearchBtn">加入计划</button>
+    </div>
+    <div class="search-results" id="planSearchResults"></div>
     <div class="progress-wrap" style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
       <span class="progress-num" id="pNum" style="font-size:26px;font-weight:700;color:#9c6b1f">0</span>
-      <span style="color:#5b4a36;font-size:13px">/ <span id="pTotal">0</span> 处已打卡</span>
+      <span style="color:#5b4a36;font-size:13px">/ <span id="pTotal">0</span> 处已抵达</span>
     </div>
     <div class="bar"><i id="pBar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,#c8a24a,#b23a2e);transition:width .4s"></i></div>
-    <div class="list-title">打卡记录</div>
+    <div class="list-title">计划表</div>
     <ul id="footprints" style="list-style:none;margin:0;padding:0"></ul>
-    <button class="btn" id="resetBtn" style="width:100%;margin-top:12px">重 置 足 迹</button>
+    <button class="btn" id="resetBtn" style="width:100%;margin-top:12px">清 空 计 划</button>
   </div>
 
   <div class="loading" id="loading">诗词数据加载中…</div>
 
-  <!-- 诗词卡片（含打卡按钮） -->
+  <!-- 地点详情/备注 -->
   <div class="poem-mask" id="poemMask">
     <div class="poem-card">
       <button class="poem-close" id="poemClose">×</button>
       <div class="vhead" id="poemHead"></div>
       <div class="vtext" id="poemText"></div>
       <div class="meta" id="poemMeta"></div>
-      <button class="poem-punch" id="poemPunch">打 卡</button>
+      <div class="poem-note" id="poemNote"></div>
+      <div class="planner-note-wrap">
+        <label class="planner-note-label" for="poemPlannerNote">行程备注</label>
+        <textarea id="poemPlannerNote" class="planner-note-input" placeholder="写下想去理由、出发时间、同行人、注意事项…"></textarea>
+      </div>
+      <div class="planner-actions">
+        <button class="btn" id="poemPlanToggle">加入计划</button>
+        <button class="poem-punch" id="poemPunch">标记已抵达</button>
+      </div>
       <div class="seal" id="poemSeal">印</div>
     </div>
   </div>
 
   <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="china-geo.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/weather.js"></script>
   <script src="data/poems.js"></script>
   <script src="js/punch.js"></script>
   <script src="js/shell.js"></script>

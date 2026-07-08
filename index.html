@@ -7,29 +7,55 @@
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-  <div id="map"></div>
+<body class="home-prelude">
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-veil intro-veil-left"></div>
+    <div class="intro-veil intro-veil-right"></div>
+    <div class="intro-center">
+      <div class="intro-seal">山河</div>
+      <div class="intro-kicker">数字诗卷 · 开场</div>
+      <h1 class="intro-title">千里江山，可游可读</h1>
+      <p class="intro-copy">
+        先看见中国，再听见一句诗，然后从你想读的那片山河进入。
+      </p>
+      <button class="btn primary intro-btn" id="introEnterBtn">启卷入山河</button>
+    </div>
+  </div>
 
+  <div id="map"></div>
+  <div class="atmosphere atmosphere-a"></div>
+  <div class="atmosphere atmosphere-b"></div>
   <div class="frame"></div>
 
   <div class="cartouche">
     <div class="title">千里江山</div>
-    <div class="sub">中 国 山 河 · 诗 词 地 图</div>
+    <div class="sub">中国山河 · 诗词地图</div>
   </div>
 
-  <div class="opening">
-    <div class="o-title">沁园春 · 雪（节选）</div>
-    <div class="o-poem">北国风光，千里冰封，万里雪飘。
-江山如此多娇，引无数英雄竞折腰。</div>
-    <div class="o-by">—— 毛泽东</div>
-  </div>
-
-  <button class="btn" style="position:fixed;right:40px;top:40px;z-index:1300" onclick="window.location.href='recommend.html'">✦ 偏好推荐</button>
+  <section class="hero-stage" data-panel-title="首页导览">
+    <div class="hero-badge">数字诗卷 · 山河入画</div>
+    <h1 class="hero-title">在中国的地形上，读中国的诗</h1>
+    <p class="hero-copy">
+      从大地高程到名篇落点，把省份、山河与诗句连成一卷可游、可读、可进入的中国地图。
+    </p>
+    <div class="hero-actions">
+      <button class="btn primary hero-btn" id="heroExploreBtn">往山河里走</button>
+      <button class="btn hero-btn" id="heroRecommendBtn">按偏好找景</button>
+    </div>
+    <div class="hero-preview" id="heroPreview">
+      <div class="preview-kicker">今日展开</div>
+      <div class="preview-title" id="previewTitle">中国山河</div>
+      <div class="preview-poem" id="previewPoem">把鼠标停在省份上，先从一首诗进入这一片土地。</div>
+      <div class="preview-meta" id="previewMeta">三十四省 · 百余处地标，正在候你点亮。</div>
+    </div>
+  </section>
 
   <div class="loading" id="loading" style="display:none">山河加载中…</div>
 
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="china-geo.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/weather.js"></script>
   <script src="data/poems.js"></script>
   <script src="js/china.js"></script>
   <script src="js/shell.js"></script>

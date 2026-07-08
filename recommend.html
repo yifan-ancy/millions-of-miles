@@ -18,6 +18,14 @@
 
   <button class="btn back-btn" style="left:auto;right:40px;top:40px" onclick="window.location.href='index.html'">← 返回大中国</button>
 
+  <section class="recommend-hero">
+    <div class="recommend-kicker">偏好寻景</div>
+    <h1>看看你更适合，去中国的哪一种山河里</h1>
+    <p>
+      选择你偏爱的景物与意境，让诗词、地形与地域气质一起回答：哪一省，最像你此刻想走近的中国。
+    </p>
+  </section>
+
   <!-- 偏好面板 -->
   <div class="side" id="prefPanel" style="left:40px;right:auto;top:120px;width:248px">
     <h2>择你所喜</h2>
@@ -36,12 +44,15 @@
       <div class="chip" data-v="边塞">边塞</div>
     </div>
     <button class="btn primary" id="recoBtn" style="width:100%;margin-top:14px">为 我 推 荐</button>
-    <div class="o-by" id="recoHint" style="margin-top:10px">选择偏好后点击推荐</div>
+    <div class="o-by" id="recoHint" style="margin-top:10px">选择偏好后，让山河替你作答</div>
   </div>
 
   <!-- 推荐结果 -->
   <div class="side" id="resultPanel" style="right:40px;top:120px;width:300px">
     <h2>山河推荐</h2>
+    <div class="recommend-summary" id="recommendSummary">
+      结果还未展开。先告诉我，你此刻想靠近怎样的中国。
+    </div>
     <ul id="recoList"></ul>
   </div>
 
@@ -49,6 +60,8 @@
 
   <script src="vendor/leaflet/leaflet.js"></script>
   <script src="china-geo.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/weather.js"></script>
   <script src="data/poems.js"></script>
   <script src="js/recommend.js"></script>
   <script src="js/shell.js"></script>

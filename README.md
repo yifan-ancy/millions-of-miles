@@ -22,7 +22,7 @@ index.html  punch.html  province.html  recommend.html   四页
 js/china.js js/punch.js js/province.js js/recommend.js   各页逻辑
 js/shell.js              App 外壳（底部导航 + 淡入）
 css/style.css            中式黄调主题
-data/poems.js            window.PROVINCE_DATA：10 省 43 处地标 + 诗词（核心内容）
+data/poems.js            window.PROVINCE_DATA：34 省（含港澳台）115 处地标 + 诗词（核心内容）
 china-geo.js             中国省级 GeoJSON（内联）
 vendor/leaflet/          本地 Leaflet 运行时
 CODEBUDDY.md            项目背景与约定（给 CodeBuddy 看）
