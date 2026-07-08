@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>偏好推荐 · 中国山河诗词地图</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <div class="frame"></div>
+
+  <div class="cartouche">
+    <div class="title">知 你 所 好</div>
+    <div class="sub">择 所 喜 · 荐 山 河</div>
+  </div>
+
+  <button class="btn back-btn" style="left:auto;right:40px;top:40px" onclick="window.location.href='index.html'">← 返回大中国</button>
+
+  <!-- 偏好面板 -->
+  <div class="side" id="prefPanel" style="left:40px;right:auto;top:120px;width:248px">
+    <h2>择你所喜</h2>
+    <div class="list-title">类型</div>
+    <div class="chips" id="typeChips">
+      <div class="chip active" data-v="mountain">名山</div>
+      <div class="chip active" data-v="river">江河</div>
+      <div class="chip active" data-v="city">城市</div>
+      <div class="chip" data-v="building">胜迹</div>
+    </div>
+    <div class="list-title">意境</div>
+    <div class="chips" id="moodChips">
+      <div class="chip" data-v="壮阔">壮阔</div>
+      <div class="chip" data-v="婉约">婉约</div>
+      <div class="chip" data-v="隐逸">隐逸</div>
+      <div class="chip" data-v="边塞">边塞</div>
+    </div>
+    <button class="btn primary" id="recoBtn" style="width:100%;margin-top:14px">为 我 推 荐</button>
+    <div class="o-by" id="recoHint" style="margin-top:10px">选择偏好后点击推荐</div>
+  </div>
+
+  <!-- 推荐结果 -->
+  <div class="side" id="resultPanel" style="right:40px;top:120px;width:300px">
+    <h2>山河推荐</h2>
+    <ul id="recoList"></ul>
+  </div>
+
+  <div class="loading" id="loading">诗词数据加载中…</div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="china-geo.js"></script>
+  <script src="data/poems.js"></script>
+  <script src="js/recommend.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>

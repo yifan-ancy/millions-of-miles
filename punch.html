@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>山河打卡 · 中国山河诗词地图</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <div class="frame"></div>
+
+  <div class="cartouche">
+    <div class="title">山 河 打 卡</div>
+    <div class="sub">踏 遍 千 山 · 留 印 诗 行</div>
+  </div>
+
+  <div class="side" id="side" style="right:40px;top:120px;width:280px">
+    <h2>我的足迹</h2>
+    <div class="progress-wrap" style="display:flex;align-items:baseline;gap:8px;margin-bottom:6px">
+      <span class="progress-num" id="pNum" style="font-size:26px;font-weight:700;color:#9c6b1f">0</span>
+      <span style="color:#5b4a36;font-size:13px">/ <span id="pTotal">0</span> 处已打卡</span>
+    </div>
+    <div class="bar"><i id="pBar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,#c8a24a,#b23a2e);transition:width .4s"></i></div>
+    <div class="list-title">打卡记录</div>
+    <ul id="footprints" style="list-style:none;margin:0;padding:0"></ul>
+    <button class="btn" id="resetBtn" style="width:100%;margin-top:12px">重 置 足 迹</button>
+  </div>
+
+  <div class="loading" id="loading">诗词数据加载中…</div>
+
+  <!-- 诗词卡片（含打卡按钮） -->
+  <div class="poem-mask" id="poemMask">
+    <div class="poem-card">
+      <button class="poem-close" id="poemClose">×</button>
+      <div class="vhead" id="poemHead"></div>
+      <div class="vtext" id="poemText"></div>
+      <div class="meta" id="poemMeta"></div>
+      <button class="poem-punch" id="poemPunch">打 卡</button>
+      <div class="seal" id="poemSeal">印</div>
+    </div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="data/poems.js"></script>
+  <script src="js/punch.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>

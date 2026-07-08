@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>千里江山 · 中国山河诗词地图</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <div class="frame"></div>
+
+  <div class="cartouche">
+    <div class="title">千里江山</div>
+    <div class="sub">中 国 山 河 · 诗 词 地 图</div>
+  </div>
+
+  <div class="opening">
+    <div class="o-title">沁园春 · 雪（节选）</div>
+    <div class="o-poem">北国风光，千里冰封，万里雪飘。
+江山如此多娇，引无数英雄竞折腰。</div>
+    <div class="o-by">—— 毛泽东</div>
+  </div>
+
+  <button class="btn" style="position:fixed;right:40px;top:40px;z-index:1300" onclick="window.location.href='recommend.html'">✦ 偏好推荐</button>
+
+  <div class="loading" id="loading" style="display:none">山河加载中…</div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="china-geo.js"></script>
+  <script src="data/poems.js"></script>
+  <script src="js/china.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>

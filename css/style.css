@@ -1,0 +1,219 @@
+/* ===== 中国山河 · 诗词地图 中式黄调主题 ===== */
+:root {
+  --paper: #f3e7c9;      /* 宣纸 */
+  --paper-deep: #e7d3a8;
+  --ink: #2b2118;        /* 墨 */
+  --ink-soft: #5b4a36;
+  --gold: #c8a24a;       /* 赭金 */
+  --gold-deep: #9c6b1f;
+  --seal: #b23a2e;       /* 朱印 */
+  --line: #b9923f;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: "Songti SC", "STSong", "SimSun", "KaiTi", "STKaiti", "Noto Serif SC", serif;
+  color: var(--ink);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+/* 地图铺满 */
+#map { position: absolute; inset: 0; background: #d9c79a; }
+
+/* 地形瓦片推向黄调（暖色滤镜） */
+.leaflet-tile-pane { filter: sepia(0.42) saturate(1.15) hue-rotate(-10deg) brightness(1.03) contrast(1.02); }
+.leaflet-container { background: #d9c79a; font-family: inherit; }
+
+/* 中式外框（双线 + 四角） */
+.frame {
+  position: fixed; inset: 14px; pointer-events: none; z-index: 1200;
+  border: 2px solid var(--gold-deep);
+  box-shadow: inset 0 0 0 6px rgba(195,162,74,0.35), inset 0 0 0 8px var(--gold-deep);
+}
+.frame::before, .frame::after {
+  content: ""; position: absolute; width: 26px; height: 26px; border: 3px solid var(--seal);
+}
+.frame::before { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+.frame::after { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+/* 题字匾额 */
+.cartouche {
+  position: fixed; top: 30px; left: 50%; transform: translateX(-50%); z-index: 1300;
+  text-align: center; pointer-events: none;
+}
+.cartouche .title {
+  font-size: 40px; letter-spacing: 14px; color: var(--ink);
+  text-shadow: 0 2px 0 rgba(255,255,255,0.4);
+  padding-left: 14px;
+}
+.cartouche .sub {
+  margin-top: 6px; font-size: 14px; letter-spacing: 6px; color: var(--ink-soft);
+}
+
+/* 开篇诗词（首页左上） */
+.opening {
+  position: fixed; left: 44px; top: 150px; z-index: 1300; max-width: 280px;
+  background: linear-gradient(160deg, rgba(243,231,201,0.94), rgba(231,211,168,0.94));
+  border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px;
+  box-shadow: 0 8px 30px rgba(60,40,10,0.25);
+}
+.opening .o-title { font-size: 18px; letter-spacing: 3px; color: var(--gold-deep); margin-bottom: 8px; }
+.opening .o-poem { font-size: 15px; line-height: 2; color: var(--ink); white-space: pre-line; }
+.opening .o-by { margin-top: 8px; font-size: 12px; color: var(--ink-soft); text-align: right; }
+
+/* 省份标注（GeoJSON tooltip 常显） */
+.province-label {
+  background: rgba(243,231,201,0.85); border: 1px solid var(--line);
+  color: var(--ink); font-size: 12px; padding: 1px 6px; border-radius: 3px;
+  box-shadow: none; white-space: nowrap; pointer-events: none;
+}
+.province-label::before { display: none; }
+.leaflet-interactive { cursor: pointer; }
+
+/* 通用按钮 */
+.btn {
+  cursor: pointer; border: 1px solid var(--gold-deep); border-radius: 6px;
+  background: rgba(243,231,201,0.9); color: var(--ink); font-family: inherit;
+  padding: 8px 14px; font-size: 14px; letter-spacing: 2px; transition: all .2s;
+}
+.btn:hover { background: var(--gold); color: #fff; }
+.btn.primary { background: var(--gold); color: #2b2118; border-color: var(--gold-deep); font-weight: 700; }
+.btn.primary:hover { background: var(--gold-deep); color: #fff; }
+
+/* 偏好选择 chips */
+.chips { display: flex; gap: 8px; margin: 6px 0 14px; }
+.chip {
+  flex: 1; text-align: center; cursor: pointer; user-select: none;
+  border: 1px solid var(--line); border-radius: 99px; padding: 6px 0;
+  font-size: 13px; color: var(--ink-soft); transition: all .2s;
+}
+.chip.active { color: #2b2118; font-weight: 700; background: var(--gold); border-color: var(--gold-deep); }
+
+/* 返回按钮（省份页左上） */
+.back-btn {
+  position: fixed; left: 44px; top: 40px; z-index: 1300;
+}
+
+/* 省份页右侧栏：省开篇诗 + 地标列表 */
+.side {
+  position: fixed; right: 40px; top: 120px; z-index: 1300; width: 260px;
+  background: linear-gradient(160deg, rgba(243,231,201,0.95), rgba(231,211,168,0.95));
+  border: 1px solid var(--line); border-radius: 8px; padding: 18px;
+  box-shadow: 0 10px 36px rgba(60,40,10,0.3); max-height: 72vh; overflow-y: auto;
+}
+.side h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: 6px; color: var(--gold-deep); }
+.side .prov-poem { font-size: 14px; line-height: 1.9; color: var(--ink); white-space: pre-line; margin-bottom: 12px;
+  border-bottom: 1px dashed var(--line); padding-bottom: 10px; }
+.side .list-title { font-size: 13px; color: var(--ink-soft); letter-spacing: 2px; margin: 6px 0; }
+.side ul { list-style: none; margin: 0; padding: 0; }
+.side li {
+  padding: 8px 10px; margin-bottom: 6px; border-radius: 6px; cursor: pointer;
+  background: rgba(255,255,255,0.35); font-size: 14px; transition: all .15s;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.side li:hover { background: var(--gold); color: #fff; }
+.side li .tag { font-size: 11px; opacity: 0.8; }
+
+/* 自定义标点 */
+.mk { display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff;
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+.mk > span { transform: rotate(45deg); }
+.mk.mountain { background: #5b8c4a; }
+.mk.river { background: #3f7bb0; }
+.mk.city { background: #c8923a; }
+.mk.building { background: #b23a2e; }
+
+/* ===== 诗词卡片（竖排） ===== */
+.poem-mask {
+  position: fixed; inset: 0; background: rgba(40,28,12,0.55); backdrop-filter: blur(2px);
+  display: none; align-items: center; justify-content: center; z-index: 2000;
+}
+.poem-mask.show { display: flex; }
+.poem-card {
+  position: relative; width: 420px; max-width: 88vw; min-height: 320px;
+  background:
+    repeating-linear-gradient(90deg, rgba(180,146,63,0.05) 0 2px, transparent 2px 26px),
+    linear-gradient(160deg, #f6ecd2, #ecd9ac);
+  border: 1px solid var(--gold-deep); border-radius: 4px; padding: 34px 40px;
+  box-shadow: 0 24px 70px rgba(20,12,4,0.5);
+  display: flex; gap: 22px; align-items: flex-start;
+}
+.poem-card .vtext {
+  writing-mode: vertical-rl; text-orientation: upright; line-height: 2.1;
+  font-size: 22px; letter-spacing: 4px; color: var(--ink);
+  max-height: 360px; overflow: hidden;
+}
+.poem-card .vhead {
+  writing-mode: vertical-rl; text-orientation: upright; line-height: 2;
+  font-size: 16px; color: var(--gold-deep); letter-spacing: 3px;
+  border-left: 1px solid var(--line); padding-left: 16px; margin-left: 4px;
+}
+.poem-card .meta { writing-mode: vertical-rl; font-size: 13px; color: var(--ink-soft); letter-spacing: 2px; }
+.seal {
+  position: absolute; right: 26px; bottom: 24px; width: 46px; height: 46px;
+  border: 2px solid var(--seal); color: var(--seal); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  line-height: 1.1; text-align: center; transform: rotate(-6deg); opacity: 0.9;
+  font-family: "KaiTi","STKaiti",serif; letter-spacing: 1px;
+}
+.poem-close {
+  position: absolute; top: 10px; right: 14px; cursor: pointer; color: var(--ink-soft);
+  font-size: 20px; line-height: 1; background: none; border: none; z-index: 2;
+}
+
+/* 省份悬停浮卡（首页） */
+.hover-poem {
+  position: absolute; z-index: 1350; max-width: 280px; pointer-events: none;
+  background: linear-gradient(160deg, #f6ecd2, #ecd9ac); border: 1px solid var(--gold-deep);
+  border-radius: 6px; padding: 12px 14px; box-shadow: 0 10px 30px rgba(60,40,10,0.35);
+  color: var(--ink); font-size: 13px; line-height: 1.7;
+}
+.hover-poem .hp-title { font-size: 16px; color: var(--gold-deep); letter-spacing: 3px; margin-bottom: 4px; }
+.hover-poem .hp-poem { white-space: pre-line; }
+.hover-poem .hp-sub { margin-top: 6px; font-size: 12px; color: var(--ink-soft); border-top: 1px dashed var(--line); padding-top: 6px; }
+
+/* 诗词卡片打卡按钮 */
+.poem-punch {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+  cursor: pointer; border: none; border-radius: 8px; padding: 9px 26px;
+  font-size: 15px; font-weight: 700; font-family: inherit; letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-deep)); color: #2b2118;
+}
+.poem-punch.done { background: #1c5c4a; color: #aef0d4; }
+
+/* 载入提示 */
+.loading {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  z-index: 1500; color: var(--ink-soft); font-size: 16px; letter-spacing: 3px;
+  background: rgba(243,231,201,0.6);
+}
+
+@media (max-width: 720px) {
+  .cartouche .title { font-size: 28px; letter-spacing: 8px; }
+  .opening { left: 24px; top: 120px; max-width: 220px; padding: 12px; }
+  .side { right: 16px; top: 96px; width: 200px; }
+  .poem-card { flex-direction: column; }
+  .tab { min-width: 72px; padding: 6px 10px; }
+}
+
+/* ===== App 风格底部导航 ===== */
+.tabbar {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1400;
+  display: flex; gap: 4px; padding: 6px; border-radius: 99px;
+  background: rgba(243,231,201,0.92); border: 1px solid var(--gold-deep);
+  box-shadow: 0 10px 30px rgba(60,40,10,0.35); backdrop-filter: blur(4px);
+}
+.tab {
+  text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-width: 92px; padding: 6px 16px; border-radius: 99px; color: var(--ink-soft);
+  font-size: 12px; letter-spacing: 2px; transition: all .2s;
+}
+.tab .tab-ic { font-size: 18px; line-height: 1; }
+.tab.active { background: var(--gold); color: #2b2118; font-weight: 700; }
+.tab:hover { color: var(--ink); }
+
+/* 页面淡入（app 质感） */
+@keyframes pageIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+body { animation: pageIn .45s ease both; }

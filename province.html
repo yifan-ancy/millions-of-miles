@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>山河 · 省份</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <div class="frame"></div>
+
+  <button class="btn back-btn" onclick="window.location.href='index.html'">← 返回大中国</button>
+
+  <div class="side" id="side">
+    <h2 id="sideTitle">省份</h2>
+    <div class="prov-poem" id="provPoem">诗词整理中…</div>
+    <div class="list-title">山川名胜</div>
+    <ul id="landmarkList"></ul>
+  </div>
+
+  <div class="loading" id="loading">山河加载中…</div>
+
+  <!-- 诗词卡片 -->
+  <div class="poem-mask" id="poemMask">
+    <div class="poem-card">
+      <button class="poem-close" id="poemClose">×</button>
+      <div class="vhead" id="poemHead"></div>
+      <div class="vtext" id="poemText"></div>
+      <div class="meta" id="poemMeta"></div>
+      <div class="seal" id="poemSeal">印</div>
+    </div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="data/poems.js"></script>
+  <script src="js/province.js"></script>
+  <script src="js/shell.js"></script>
+</body>
+</html>
